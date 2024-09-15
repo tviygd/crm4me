@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crm4me | Online and Offline crm</title>
+    <style>
+        :root {
+            --primary-color: #1a73e8;
+            --logo-color: #5f6368;
+            --top-menu-color: #5f6368;
+            --text-color: #202124;
+            --background-color: #ffffff;
+            --card-background: #f5f6f7;
+            --border-color: #dadce0;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .dark-theme {
+            --primary-color: #8ab4f8;
+            --logo-color: #e8eaed;
+            --text-color: #e8eaed;
+            --background-color: #202124;
+            --card-background: #303134;
+            --border-color: #5f6368;
+        }
+
+        header {
+            background-color: var(--background-color);
+            border-bottom: 1px solid var(--border-color);
+            height: 48px;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .wrap {
+            max-width: 1368px;
+            margin: 0 auto;
+            height: 100%;
+            padding:0;
+        }
+
+        .logo svg {
+            height: 24px;
+            fill: var(--logo-color);
+        }
+
+        nav {
+            flex-grow: 1;
+            margin-left: 2rem;
+        }
+
+        nav ul {
+            display: flex;
+            list-style-type: none;
+            align-items: center;
+            padding: 0;
+            margin: 0;
+        }
+
+        nav ul li {
+            margin-right: 1.5rem;
+            position: relative;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--top-menu-color);
+            font-size: 14px;
+            font-weight: 400;
+            padding: 1rem 0;
+            display: block;
+        }
+
+        nav ul li a:hover {
+            color: var(--text-color);
+        }
+
+        nav ul li a.active {
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        nav ul li a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary-color);
+        }
+        .submenu {
+            height: 48px;
+            background-color: var(--card-background);
+            border-bottom: 1px solid var(--border-color);
+        }
+        .submenu ul {
+            display: flex;
+            align-items: center;
+            list-style-type: none;     
+        }
+
+        .submenu ul li {
+            margin-right: 1.5rem;
+            position: relative;
+        }
+
+        .submenu ul li a {
+            display: block;
+            padding: 1rem 0;
+            text-decoration: none;
+            color: var(--text-color);
+            font-size: 14px;
+        }
+
+        .submenu ul li a.active2::after {
+            content: ' ';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--text-color);
+        }
+        .header-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-icon {
+            margin-right: 1rem;
+            cursor: pointer;
+        }
+
+        .theme-toggle, .lang-select {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--logo-color);
+            font-size: 14px;
+            padding: 0.5rem;
+        }
+
+        .lang-select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%235f6368'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.5rem center;
+            background-size: 1.5em;
+            padding-right: 2rem;
+        }
+
+        main {
+            flex-grow: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 400;
+        }
+
+        .intro {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 3rem;
+        }
+
+        .intro-text {
+            flex: 1;
+            padding-right: 2rem;
+        }
+
+        .intro-image {
+            flex: 0 0 300px;
+            background-color: #e8f0fe;
+            border-radius: 8px;
+            padding: 1rem;
+        }
+
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .component-card {
+            background-color: var(--card-background);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+
+        .component-icon {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .component-card h2 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .component-card p {
+            font-size: 14px;
+            margin-bottom: 1rem;
+        }
+
+        .see-pattern-btn {
+            background-color: transparent;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        footer {
+            background-color: var(--card-background);
+            padding: 1rem;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .hamburger-menu {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger-menu span {
+            width: 25px;
+            height: 3px;
+            background-color: var(--logo-color);
+            margin: 2px 0;
+        }
+
+        @media (max-width: 1380px) {
+            .logo svg, .submenu ul li:first-child {
+                margin: 0 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hamburger-menu {
+                display: flex;
+                margin: 0 1rem;
+            }
+
+            nav {
+                display: none;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background-color: var(--background-color);
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            nav.active {
+                display: block;
+            }
+
+            nav ul {
+                flex-direction: column;
+            }
+
+            nav ul li {
+                margin: 0;
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            nav ul li a {
+                padding: 1rem;
+            }
+
+            nav ul li a.active::after {
+                display: none;
+            }
+
+            .submenu {
+                display: none;
+            }
+
+            .header-right {
+               /* display: none; */
+            }
+
+            .intro {
+                flex-direction: column;
+            }
+
+            .intro-image {
+                margin-top: 1rem;
+                width: 100%;
+                flex: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container wrap">
+            <div class="logo">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 89.608 16.33" fill="#5f6368"><path d="M6.05 3.57q1.31 0 2.29.27.97.28 1.52.77.54.5.54 1.19 0 .46-.28.86-.28.4-.81.4-.36 0-.6-.1-.25-.11-.43-.27-.18-.16-.44-.3-.23-.13-.7-.21-.47-.08-.7-.08-1.17 0-1.99.5-.82.51-1.25 1.37-.44.86-.44 1.99 0 1.1.45 1.97.45.86 1.24 1.36.79.51 1.83.51.57 0 .99-.07.41-.07.69-.21.32-.18.57-.39.26-.2.76-.2.6 0 .92.38.32.38.32.93 0 .57-.64 1.04-.64.48-1.69.76-1.05.29-2.27.29-1.81 0-3.15-.84-1.33-.84-2.06-2.29Q0 11.75 0 9.96q0-1.89.77-3.32.77-1.44 2.14-2.26 1.37-.81 3.14-.81zm7.86 12.53q-.59 0-.98-.4-.4-.4-.4-1V5.2q0-.6.4-1 .39-.4.98-.4.6 0 .99.4.39.4.39 1v2.16l-.16-1.54q.26-.55.66-.98.4-.42.91-.71.5-.29 1.08-.43.57-.13 1.15-.13.69 0 1.16.39.47.39.47.92 0 .76-.39 1.09-.39.33-.85.33-.44 0-.79-.16-.36-.16-.82-.16-.41 0-.84.2-.42.19-.78.61-.36.41-.58 1.02-.22.61-.22 1.44v5.45q0 .6-.39 1-.39.4-.99.4zm15.07-12.53q1.84 0 2.71.88.88.89 1.15 2.29l-.39-.21.19-.37q.27-.52.85-1.13.57-.61 1.39-1.04.82-.42 1.83-.42 1.65 0 2.52.71.86.71 1.18 1.9.32 1.18.32 2.63v5.89q0 .6-.39 1-.39.4-.99.4-.6 0-.99-.4-.39-.4-.39-1V8.81q0-.76-.18-1.37-.19-.61-.67-.98-.48-.36-1.38-.36-.87 0-1.49.36-.62.37-.93.98-.32.61-.32 1.37v5.89q0 .6-.39 1-.39.4-.98.4-.6 0-.99-.4-.4-.4-.4-1V8.81q0-.76-.18-1.37-.18-.61-.67-.98-.48-.36-1.38-.36-.87 0-1.49.36-.62.37-.93.98-.31.61-.31 1.37v5.89q0 .6-.39 1-.4.4-.99.4-.6 0-.99-.4-.39-.4-.39-1V5.2q0-.6.39-1 .39-.4.99-.4.59 0 .99.4.39.4.39 1v.99l-.35-.07q.21-.39.58-.84.37-.45.89-.84.53-.39 1.18-.63.64-.24 1.4-.24zm22.19 12.53q-.57 0-.96-.4-.39-.4-.39-1V3.89l.48.11-4.44 5.5-.11-.3h8.14q.55 0 .92.37.37.37.37.92 0 .53-.37.88-.37.36-.92.36H43.84q-.49 0-.93-.39-.45-.39-.45-.97 0-.5.34-.92l7.27-8.9q.18-.25.48-.4.3-.15.67-.15.6 0 .98.4.38.41.38 1V14.7q0 .6-.4 1-.41.4-1.01.4zm12.54-12.53q1.84 0 2.71.88.88.89 1.15 2.29l-.39-.21.19-.37q.27-.52.85-1.13.57-.61 1.39-1.04.82-.42 1.83-.42 1.65 0 2.52.71.86.71 1.18 1.9.32 1.18.32 2.63v5.89q0 .6-.39 1-.39.4-.99.4-.6 0-.99-.4-.39-.4-.39-1V8.81q0-.76-.18-1.37-.19-.61-.67-.98-.48-.36-1.38-.36-.87 0-1.49.36-.62.37-.93.98-.32.61-.32 1.37v5.89q0 .6-.39 1-.39.4-.98.4-.59 0-.98-.4-.4-.4-.4-1V8.81q0-.76-.18-1.37-.18-.61-.67-.98-.48-.36-1.38-.36-.87 0-1.49.36-.62.37-.93.98-.31.61-.31 1.37v5.89q0 .6-.39 1-.4.4-.99.4-.6 0-.99-.4-.39-.4-.39-1V5.2q0-.6.39-1 .39-.4.99-.4.59 0 .99.4.39.4.39 1v.99l-.35-.07q.21-.39.58-.84.36-.45.89-.84.53-.39 1.18-.63.64-.24 1.4-.24zm20.54 12.76q-1.96 0-3.39-.82-1.44-.81-2.21-2.22-.77-1.4-.77-3.17 0-2.07.84-3.53.84-1.46 2.19-2.24 1.36-.78 2.88-.78 1.17 0 2.22.48 1.04.48 1.85 1.32.8.84 1.28 1.94.47 1.11.47 2.35-.03.55-.44.9-.41.34-.97.34h-8.78l-.69-2.3h8.44l-.51.46v-.62q-.04-.67-.47-1.19-.42-.53-1.06-.84-.63-.31-1.34-.31-.69 0-1.29.18-.6.18-1.03.62-.44.44-.69 1.17-.26.74-.26 1.87 0 1.24.52 2.1.52.86 1.33 1.31.82.45 1.74.45.85 0 1.36-.14.5-.14.81-.33.31-.2.57-.33.41-.21.78-.21.51 0 .84.34.33.35.33.81 0 .62-.64 1.13-.6.5-1.68.88-1.08.38-2.23.38z"/></svg>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" class="active">Calendar</a></li>
+                    <li><a href="#">Clients</a></li>
+                </ul>
+            </nav>
+            <div class="header-right">
+                <div class="search-icon">🔍</div>
+                <button class="theme-toggle">☀️</button>
+                <select class="lang-select">
+                    <option value="en">EN</option>
+                    <option value="uk">UA</option>
+                </select>
+                <nav>
+                <ul>
+                    <li><a href="#">Sign in</a></li>
+                </ul>
+            </nav>
+                <div class="hamburger-menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>       
+        </div>
+    </header>
+    <div class="submenu ">
+    <ul class="wrap">
+        <li><a href="#">Room 1</a></li>
+        <li><a href="#">Room 2</a></li>
+        <li><a href="#" class="active2">Room 3</a></li>
+        <li><a href="#">Room 4</a></li>
+    </ul>
+    </div>
+    <main>
+        <div class="intro">
+            <div class="intro-text">
+                <h1>Component patterns</h1>
+                <p>Welcome to our growing collection of component patterns. These can provide inspiration, accessibility requirements, adaptive strategies for viewport and user preferences, and more.</p>
+            </div>
+            <div class="intro-image">
+                <!-- Placeholder for the component illustration -->
+            </div>
+        </div>
+
+        <div class="component-grid">
+            <div class="component-card">
+                <div class="component-icon">&lt;/&gt;</div>
+                <h2>Breadcrumbs</h2>
+                <p>Create a responsive and accessible breadcrumbs component for users to navigate your site.</p>
+                <button class="see-pattern-btn">See the pattern</button>
+            </div>
+            <div class="component-card">
+                <div class="component-icon">&lt;/&gt;</div>
+                <h2>Buttons</h2>
+                <p>Style the different buttons types of the web.</p>
+                <button class="see-pattern-btn">See the pattern</button>
+            </div>
+            <div class="component-card">
+                <div class="component-icon">&lt;/&gt;</div>
+                <h2>Carousel</h2>
+                <p>Create a color-adaptive, responsive, and accessible carousel component.</p>
+                <button class="see-pattern-btn">See the pattern</button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 crm4.me. All rights reserved.</p>
+    </footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const themeToggle = document.querySelector('.theme-toggle');
+    const languageSelect = document.querySelector('.lang-select');
+    const hamburgerMenu = document.querySelector('.hamburger-menu');
+    const nav = document.querySelector('nav');
+
+    themeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark-theme');
+        themeToggle.textContent = document.body.classList.contains('dark-theme') ? '🌙' : '☀️';
+    });
+
+    languageSelect.addEventListener('change', (e) => {
+        console.log(`Language changed to ${e.target.value}`);
+    });
+
+    hamburgerMenu.addEventListener('click', () => {
+        nav.classList.toggle('active');
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!nav.contains(e.target) && !hamburgerMenu.contains(e.target)) {
+            nav.classList.remove('active');
+        }
+    });
+});
+</script>
+</body>
+</html>
